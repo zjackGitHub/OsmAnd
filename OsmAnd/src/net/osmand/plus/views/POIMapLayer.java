@@ -322,7 +322,11 @@ public class POIMapLayer extends OsmandMapLayer implements ContextMenuLayer.ICon
 			return app.getResources().getString(R.string.shared_string_none);
 		}
 		PoiUIFilter filter = pfh.getFilterById(filterId);
-		return filter.getName();
+		if (filter == null) {
+			return app.getResources().getString(R.string.shared_string_none);
+		} else {
+			return filter.getName();
+		}
 	}
 
 	static int getResIdFromAttribute(final Context ctx, final int attr) {

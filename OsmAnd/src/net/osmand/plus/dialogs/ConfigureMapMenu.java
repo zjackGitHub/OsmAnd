@@ -220,7 +220,7 @@ public class ConfigureMapMenu {
 		selected = settings.SELECTED_POI_FILTER_FOR_MAP.get() != null;
 		adapter.addItem(new ContextMenuItem.ItemBuilder()
 				.setTitleId(R.string.layer_poi, activity)
-				.setSelected(settings.SELECTED_POI_FILTER_FOR_MAP.get() != null)
+				.setSelected(selected)
 				.setDescription(POIMapLayer.getSelectedPoiName(app))
 				.setColor(selected ? R.color.osmand_orange : ContextMenuItem.INVALID_ID)
 				.setIcon(R.drawable.ic_action_info_dark)
