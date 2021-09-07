@@ -355,6 +355,8 @@ public class VoiceLanguageBottomSheetFragment extends BasePreferenceBottomSheet 
 		if (activity != null) {
 			settings.VOICE_PROVIDER.setModeValue(getAppMode(), indexItem.getBasename());
 			onVoiceProviderChanged();
+			app.initVoiceCommandPlayer(activity, getAppMode(), false, null, false,
+					false, false);
 		}
 		if (DownloadActivityType.isVoiceTTS(indexItem) || forceDismiss) {
 			dismiss();
