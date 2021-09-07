@@ -191,11 +191,14 @@ public class DownloadOsmandIndexesHelper {
 
 			String lang = target.substring(IndexConstants.VOICE_INDEX_DIR.length(),
 					target.indexOf(IndexConstants.VOICE_PROVIDER_SUFFIX));
-			File destFile = new File(voiceDirPath, target.substring(IndexConstants.VOICE_INDEX_DIR.length(),
-					target.indexOf("/", IndexConstants.VOICE_INDEX_DIR.length())) + "/" + lang + "_tts.js");
-			defaultTTS.add(new AssetIndexItem(lang + "_" + IndexConstants.TTSVOICE_INDEX_EXT_JS,
+			String ttsIndexFolder = target.substring(IndexConstants.VOICE_INDEX_DIR.length(),
+					target.indexOf("/", IndexConstants.VOICE_INDEX_DIR.length()));
+			File destFile = new File(voiceDirPath, ttsIndexFolder + "/" + lang + "_tts.js");
+			IndexItem ttsIndex = new AssetIndexItem(lang + "_" + IndexConstants.TTSVOICE_INDEX_EXT_JS,
 					"voice", installDate, "0.1", destFile.length(), asset.source,
-					destFile.getPath(), DownloadActivityType.VOICE_FILE));
+					destFile.getPath(), DownloadActivityType.VOICE_FILE);
+			ttsIndex.setDownloaded(destFile.exists());
+			defaultTTS.add(ttsIndex);
 		}
 
 		return defaultTTS;
@@ -225,8 +228,10 @@ public class DownloadOsmandIndexesHelper {
 			if (isCustomVoice) {
 				String fileName = indexInfo.getFileName().replace("-", "_") + ".js";
 				File file = new File(voiceDirPath, indexInfo.getFileName() + "/" + fileName);
-				customTTS.add(new AssetIndexItem(fileName, "voice", installDate, "0.1",
-						file.length(), "", file.getPath(), DownloadActivityType.VOICE_FILE));
+				IndexItem customVoiceIndex = new AssetIndexItem(fileName, "voice", installDate, "0.1",
+						file.length(), "", file.getPath(), DownloadActivityType.VOICE_FILE);
+				customVoiceIndex.setDownloaded(true);
+				customTTS.add(customVoiceIndex);
 			}
 		}
 

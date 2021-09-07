@@ -1,5 +1,6 @@
 package net.osmand.plus.settings.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 
 import net.osmand.AndroidUtils;
@@ -349,8 +351,11 @@ public class VoiceLanguageBottomSheetFragment extends BasePreferenceBottomSheet 
 	}
 
 	private void updateVoiceProvider(IndexItem indexItem, boolean forceDismiss) {
-		settings.VOICE_PROVIDER.setModeValue(getAppMode(), indexItem.getBasename());
-		onVoiceProviderChanged();
+		Activity activity = getActivity();
+		if (activity != null) {
+			settings.VOICE_PROVIDER.setModeValue(getAppMode(), indexItem.getBasename());
+			onVoiceProviderChanged();
+		}
 		if (DownloadActivityType.isVoiceTTS(indexItem) || forceDismiss) {
 			dismiss();
 		}
@@ -358,8 +363,14 @@ public class VoiceLanguageBottomSheetFragment extends BasePreferenceBottomSheet 
 	}
 
 	private void downloadIndexItem(IndexItem indexItem) {
-		if (getActivity() != null) {
-			new DownloadValidationManager(app).startDownload(getActivity(), indexItem);
+		FragmentActivity activity = getActivity();
+		if (activity != null) {
+			DownloadValidationManager manager = new DownloadValidationManager(app);
+			if (DownloadActivityType.isVoiceTTS(indexItem)) {
+				manager.copyAssetsWithoutInternet(activity, indexItem);
+			} else {
+				manager.startDownload(activity, indexItem);
+			}
 			indexToSelectAfterDownload = indexItem;
 		}
 	}
