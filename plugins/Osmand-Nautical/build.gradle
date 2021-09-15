@@ -12,10 +12,10 @@ android {
 			keyPassword "android"
 		}
 		release {
-      		storeFile file("/var/lib/jenkins/osmand_key")
-			storePassword System.getenv("OSMAND_APK_PASSWORD")
-			keyAlias "osmand"
-			keyPassword System.getenv("OSMAND_APK_PASSWORD")
+			storeFile file("../keystores/bjtu.keystore")
+			storePassword "bjtukeystore"
+			keyAlias "bjtu"
+			keyPassword "bjtukeystore"
 		}
 	}
 

@@ -36,7 +36,7 @@ afterEvaluate {
 }
 
 project.afterEvaluate {
-	publishing {
+	release {
 		repositories {
 			ivy {
 				url = System.getenv("OSMAND_BINARIES_IVY_ROOT") ?: "./"

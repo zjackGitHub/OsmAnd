@@ -64,7 +64,7 @@ android {
 			keyPassword "android"
 		}
 
-		publishing {
+		release {
 			storeFile file("/var/lib/jenkins/osmand_key")
 			storePassword System.getenv("OSMAND_APK_PASSWORD")
 			keyAlias "osmand"
@@ -79,7 +79,7 @@ android {
 			applicationIdSuffix ".debug"
 		}
 		release {
-			signingConfig signingConfigs.publishing
+			signingConfig signingConfigs.release
 		}
 	}
 

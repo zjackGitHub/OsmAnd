@@ -85,24 +85,6 @@ artifacts {
 	android androidJar
 }
 
-publishing {
-	repositories {
-		ivy {
-			url = System.getenv("OSMAND_BINARIES_IVY_ROOT") ?: "./"
-		}
-	}
-    publications {
-        maven(MavenPublication) {
-			artifactId "osmand-base"
-            from components.java
-        }
-		ivyJava(IvyPublication) {
-			artifact androidJar {
-				classifier 'android'
-			}
-		}
-	}
-}
 
 dependencies {
 	testImplementation 'junit:junit:4.12'
